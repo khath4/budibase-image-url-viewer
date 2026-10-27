@@ -1,7 +1,7 @@
 {
   "name": "image-url-viewer",
-  "version": "1.0.0",
-  "description": "Display a gallery of images from a comma-separated string of URLs (Budibase 2.9.38)",
+  "version": "1.0.1",
+  "description": "Display a gallery of files from a comma-separated string of URLs; images preview inline, other file types show a default unsupported-preview card (Budibase 2.9.38)",
   "license": "MIT",
   "svelte": "index.js",
   "module": "dist/plugin.min.js",

@@ -27,6 +27,20 @@
   $: count = list.length
   $: inBuilder = $builderStore?.inBuilder
 
+  const imageExtensions = [
+    "png",
+    "jpg",
+    "jpeg",
+    "gif",
+    "svg",
+    "bmp",
+    "webp",
+    "tiff",
+    "jfif",
+    "avif",
+    "ico",
+  ]
+
   const fileName = url => {
     try {
       const clean = url.split("?")[0].split("#")[0]
@@ -35,6 +49,14 @@
       return url
     }
   }
+
+  const extOf = url => {
+    const name = fileName(url)
+    const dot = name.lastIndexOf(".")
+    return dot >= 0 ? name.substring(dot + 1).toLowerCase() : ""
+  }
+
+  const isImage = url => imageExtensions.includes(extOf(url))
 
   const navLeft = () => {
     if (selectedIndex > 0) selectedIndex -= 1
@@ -55,10 +77,24 @@
         <div class="thumb" style={`height:${height}px`}>
           {#if openOnClick}
             <a href={url} target="_blank" rel="noopener noreferrer" title={fileName(url)}>
-              <img src={url} alt={fileName(url)} style={`object-fit:${objectFit}`} class="clickable" />
+              {#if isImage(url)}
+                <img src={url} alt={fileName(url)} style={`object-fit:${objectFit}`} class="clickable" />
+              {:else}
+                <div class="file-placeholder">
+                  <div class="extension">{extOf(url) || "FILE"}</div>
+                  <div class="fp-name">{fileName(url)}</div>
+                  <div class="unsupported">Preview not supported</div>
+                </div>
+              {/if}
             </a>
-          {:else}
+          {:else if isImage(url)}
             <img src={url} alt={fileName(url)} style={`object-fit:${objectFit}`} />
+          {:else}
+            <div class="file-placeholder">
+              <div class="extension">{extOf(url) || "FILE"}</div>
+              <div class="fp-name">{fileName(url)}</div>
+              <div class="unsupported">Preview not supported</div>
+            </div>
           {/if}
         </div>
       {/each}
@@ -84,21 +120,37 @@
       </div>
 
       <div class="image-wrapper" style={`height:${height}px`}>
-        {#if openOnClick}
-          <a href={selectedUrl} target="_blank" rel="noopener noreferrer" class="image-link">
+        {#if isImage(selectedUrl)}
+          {#if openOnClick}
+            <a href={selectedUrl} target="_blank" rel="noopener noreferrer" class="image-link">
+              <img
+                src={selectedUrl}
+                alt={fileName(selectedUrl)}
+                style={`object-fit:${objectFit}`}
+                class="clickable"
+              />
+            </a>
+          {:else}
             <img
               src={selectedUrl}
               alt={fileName(selectedUrl)}
               style={`object-fit:${objectFit}`}
-              class="clickable"
             />
+          {/if}
+        {:else if openOnClick}
+          <a href={selectedUrl} target="_blank" rel="noopener noreferrer" class="image-link">
+            <div class="file-placeholder">
+              <div class="extension">{extOf(selectedUrl) || "FILE"}</div>
+              <div class="fp-name">{fileName(selectedUrl)}</div>
+              <div class="unsupported">Preview not supported</div>
+            </div>
           </a>
         {:else}
-          <img
-            src={selectedUrl}
-            alt={fileName(selectedUrl)}
-            style={`object-fit:${objectFit}`}
-          />
+          <div class="file-placeholder">
+            <div class="extension">{extOf(selectedUrl) || "FILE"}</div>
+            <div class="fp-name">{fileName(selectedUrl)}</div>
+            <div class="unsupported">Preview not supported</div>
+          </div>
         {/if}
 
         {#if selectedIndex > 0}
@@ -181,6 +233,37 @@
   }
   img.clickable {
     cursor: pointer;
+  }
+  .file-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    background-color: var(--spectrum-global-color-gray-100, #f5f5f5);
+    color: var(--spectrum-global-color-gray-700, #555);
+    gap: 4px;
+  }
+  .file-placeholder .extension {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 15px;
+    color: var(--spectrum-global-color-gray-800, #333);
+  }
+  .file-placeholder .fp-name {
+    font-size: 12px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .file-placeholder .unsupported {
+    font-size: 11px;
+    color: var(--spectrum-global-color-gray-600, #888);
   }
   .nav {
     position: absolute;

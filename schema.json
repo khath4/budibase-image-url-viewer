@@ -2,12 +2,12 @@
   "type": "component",
   "metadata": {
     "name": "image-url-viewer",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "schema": {
     "name": "image-url-viewer",
     "friendlyName": "Image URL Viewer",
-    "description": "Display a gallery of images from a comma-separated string of URLs",
+    "description": "Display files from a comma-separated string of URLs; images preview inline, other types show an unsupported-preview card",
     "icon": "Image",
     "styles": ["size"],
     "size": {
