@@ -1,0 +1,58 @@
+{
+  "type": "component",
+  "metadata": {
+    "name": "image-url-viewer",
+    "version": "1.0.0"
+  },
+  "schema": {
+    "name": "image-url-viewer",
+    "friendlyName": "Image URL Viewer",
+    "description": "Display a gallery of images from a comma-separated string of URLs",
+    "icon": "Image",
+    "styles": ["size"],
+    "size": {
+      "width": 400,
+      "height": 240
+    },
+    "settings": [
+      {
+        "type": "text",
+        "label": "Image URLs (comma separated)",
+        "key": "urls"
+      },
+      {
+        "type": "select",
+        "label": "Layout",
+        "key": "layout",
+        "defaultValue": "gallery",
+        "options": [
+          { "label": "Gallery (one at a time)", "value": "gallery" },
+          { "label": "Grid (thumbnails)", "value": "grid" }
+        ]
+      },
+      {
+        "type": "select",
+        "label": "Image fit",
+        "key": "objectFit",
+        "defaultValue": "contain",
+        "options": [
+          { "label": "Contain", "value": "contain" },
+          { "label": "Cover", "value": "cover" },
+          { "label": "Fill", "value": "fill" }
+        ]
+      },
+      {
+        "type": "number",
+        "label": "Image height (px)",
+        "key": "height",
+        "defaultValue": 200
+      },
+      {
+        "type": "boolean",
+        "label": "Open in new tab on click",
+        "key": "openOnClick",
+        "defaultValue": true
+      }
+    ]
+  }
+}

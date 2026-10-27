@@ -1,0 +1,24 @@
+{
+  "name": "image-url-viewer",
+  "version": "1.0.0",
+  "description": "Display a gallery of images from a comma-separated string of URLs (Budibase 2.9.38)",
+  "license": "MIT",
+  "svelte": "index.js",
+  "module": "dist/plugin.min.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -cw"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^3.20.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-svelte": "^7.1.4",
+    "svelte": "^3.49.0",
+    "tar": "^6.1.11"
+  }
+}
